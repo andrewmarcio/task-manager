@@ -6,7 +6,7 @@ import { Button } from "@presentation/components/button";
 
 const Register = memo(() => {
     return <div className="flex w-100 h-full items-center justify-center">
-        <div className="w-full flex flex-col gap-6 p-4 bg-white rounded-lg shadow-xl">
+        <div className="w-[30dvw] flex flex-col gap-6 p-4 bg-white rounded-lg drop-shadow-2xl">
             <div>
                 <picture className="w-100 h-12">
                     <img src={logo} alt="Login logo" />
