@@ -27,6 +27,12 @@
       "@presentation/*": [
         "./src/presentation/*"
       ],
+      "@shared/*": [
+        "./src/shared/*"
+      ],
+      "@assets/*": [
+        "./src/assets/*"
+      ]
     }
   },
   "include": ["src"]

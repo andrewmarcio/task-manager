@@ -9,6 +9,8 @@ export default defineConfig({
     alias: {
       "@infra": path.resolve(__dirname, "./src/infra"),
       "@presentation": path.resolve(__dirname, "./src/presentation"),
+      "@shared": path.resolve(__dirname, "./src/shared"),
+      "@assets": path.resolve(__dirname, "./src/assets"),
     },
   },
 })
