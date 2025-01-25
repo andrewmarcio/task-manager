@@ -1,7 +1,7 @@
 import { Button } from "@presentation/components/button";
 import { Input } from "@presentation/components/form/input";
 import { memo } from "react";
-import logo from "@assets/metrix-logo_fundo-azul-1.png"
+import logo from "@assets/metrix-logo_fundo-azul-1.png";
 
 const Login = memo(() => {
     return <div className="flex w-100 h-full items-center justify-center">
@@ -18,7 +18,7 @@ const Login = memo(() => {
                 </div>
                 <div className="flex flex-col gap-1">
                     <label htmlFor="password">Password</label>
-                    <Input className="w-100 border-white" id="password" placeholder="Enter your password" />
+                    <Input className="w-100 border-white" id="password" type="password" placeholder="Enter your password" />
                 </div>
             </div>
             <Button className="text-white">
