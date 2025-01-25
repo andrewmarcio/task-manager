@@ -13,11 +13,11 @@ const Login = memo(() => {
             </div>
             <div className="w-full flex flex-col gap-2">
                 <div className="flex flex-col gap-1">
-                    <label className="" htmlFor="email">Email</label>
+                    <label htmlFor="email">Email</label>
                     <Input className="w-100 border-white" id="email" placeholder="Enter your email" />
                 </div>
                 <div className="flex flex-col gap-1">
-                    <label className="" htmlFor="password">password</label>
+                    <label htmlFor="password">Password</label>
                     <Input className="w-100 border-white" id="password" placeholder="Enter your password" />
                 </div>
             </div>
