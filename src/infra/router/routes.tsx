@@ -1,13 +1,29 @@
 import { PageLayout } from "@presentation/layouts/page-layout";
 import { Login } from "@presentation/pages/login";
-import { RouteObject } from "react-router-dom";
+import { Register } from "@presentation/pages/register";
+import { Navigate, RouteObject } from "react-router-dom";
 
 const routes: RouteObject[] = [
     {
         path: "/",
-        element: <PageLayout>
-            <Login />
-        </PageLayout>
+        children: [
+            {
+                index: true,
+                element: <Navigate to={"/login"} />
+            },
+            {
+                path: "login",
+                element: <PageLayout>
+                    <Login />
+                </PageLayout>
+            },
+            {
+                path: "register",
+                element: <PageLayout>
+                    <Register />
+                </PageLayout>
+            }
+        ]
     }
 ]
 
