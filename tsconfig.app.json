@@ -32,6 +32,12 @@
       ],
       "@assets/*": [
         "./src/assets/*"
+      ],
+      "@domain/*": [
+        "./src/domain/*"
+      ],
+      "@services/*": [
+        "./src/application/services/*"
       ]
     }
   },
