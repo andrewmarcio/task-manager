@@ -1,3 +1,4 @@
+import { Toaster } from "@presentation/components/toast";
 import { mergeStyles } from "@shared/utils/merge-styles";
 import { memo, PropsWithChildren } from "react";
 
@@ -9,6 +10,7 @@ const PageLayout = memo(({ isFullContent, children }: PropsWithChildren<{ isFull
         )}>
             {children}
         </div>
+        <Toaster />
     </main>
 })
 

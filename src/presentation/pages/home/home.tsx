@@ -5,7 +5,7 @@ import { Select } from "@presentation/components/form/select"
 import { Table, TableActions, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@presentation/components/table"
 import { usePagination } from "@presentation/hooks/use-pagination"
 import { memo } from "react"
-import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from "react-feather"
+import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from "lucide-react"
 import { useHomePage } from "./use-home-page"
 
 const Home = memo(() => {
