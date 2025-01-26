@@ -11,7 +11,7 @@ export const LoginValidationSchema = z.object({
 })
 
 export const RegisterValidationSchema = z.object({
-    name: z.string().nonempty(),
+    name: z.string().nonempty("Name is required"),
     email: z.string().email().nonempty("Email is required!"),
     password: z.string()
         .min(8, {message: "Password must contain at least 8 character(s)"})
