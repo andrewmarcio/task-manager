@@ -118,7 +118,7 @@ const TableCaption = React.forwardRef<
 ))
 TableCaption.displayName = "TableCaption"
 
-type TableAction = {
+export type TableAction = {
     label: string
     icon?: React.ReactNode
     handleClick: () => void
@@ -136,7 +136,7 @@ const TableActions = React.memo(({ actions }: TableActionsProps) => {
                 <DropdownMenuLabel>Actions</DropdownMenuLabel>
                 <DropdownMenuSeparator className="bg-gray-200" />
                 {actions.flatMap((action, index) => (
-                    <DropdownMenuItem key={`table-action-${index}`} onClick={action.handleClick}>
+                    <DropdownMenuItem key={`table-action-${index}`} className="hover:cursor-pointer" onClick={action.handleClick}>
                         {action.label}
                         {action?.icon && <DropdownMenuShortcut>{action.icon}</DropdownMenuShortcut>}
                     </DropdownMenuItem>
@@ -147,7 +147,14 @@ const TableActions = React.memo(({ actions }: TableActionsProps) => {
 })
 
 export {
-    Table, TableActions, TableBody, TableCaption, TableCell, TableFooter,
-    TableHead, TableHeader, TableRow
+    Table, 
+    TableActions, 
+    TableBody, 
+    TableCaption, 
+    TableCell, 
+    TableFooter,
+    TableHead, 
+    TableHeader, 
+    TableRow,
 }
 

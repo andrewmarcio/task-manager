@@ -7,4 +7,5 @@ export {
     TableRow,
     TableCell,
     TableCaption,
+    TableActions,
 } from "./table"
