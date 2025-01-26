@@ -31,6 +31,11 @@ const Login = memo(() => {
                     Login
                 </Button>
             </form>
+            <Button variant="link" type="button" >
+                <a href="/auth/register">
+                    Sign up
+                </a>
+            </Button>
         </div>
     </div>
 })
