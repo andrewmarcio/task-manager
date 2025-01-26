@@ -1,13 +1,13 @@
 import { LoginDTO, RegisterDTO } from "@domain/auth/auth.dto";
 import { AuthServiceInterface } from "@domain/auth/auth.service";
-import { CookiesService } from "@domain/cookies/cookies.service";
+import { CookiesServiceInterface } from "@domain/cookies/cookies.service";
 import { AxiosInstance } from "axios";
 
 export const authService = ({
     cookies,
     client,
 }: {
-    cookies: CookiesService;
+    cookies?: CookiesServiceInterface;
     client: AxiosInstance
 }): AuthServiceInterface => {
 
@@ -19,7 +19,7 @@ export const authService = ({
             return await client.post("/register", data)
         },
         logout: () => {
-            cookies.remove("accessToken");
+            cookies?.remove("accessToken");
         }
     }
 }

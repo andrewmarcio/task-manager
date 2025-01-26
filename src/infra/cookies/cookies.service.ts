@@ -1,7 +1,7 @@
-import { CookiesService } from '@domain/cookies/cookies.service'
+import { CookiesServiceInterface } from '@domain/cookies/cookies.service'
 import Cookies from 'js-cookie'
 
-export function cookiesService(): CookiesService {
+export function cookiesService(): CookiesServiceInterface {
     return {
         get: (name: string): string | undefined => {
             return Cookies.get(name)
