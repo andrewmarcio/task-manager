@@ -1,5 +1,4 @@
 import { memo } from "react";
-import { LogOut, User } from "react-feather";
 import { Avatar } from "../avatar";
 import { 
     DropdownMenu, 
@@ -10,6 +9,7 @@ import {
     DropdownMenuShortcut, 
     DropdownMenuTrigger 
 } from "../dropdown-menu";
+import { LogOut, User } from "lucide-react";
  
 const AppBar = memo(() => {
     return <div className="w-100 flex flex-row items-center justify-between">

@@ -1,6 +1,6 @@
 import { TableAction } from "@presentation/components/table/table"
+import { Pencil, Trash2 } from "lucide-react"
 import { useCallback } from "react"
-import { Edit2, Trash2 } from "react-feather"
 
 export function useHomePage() {
 
@@ -15,7 +15,7 @@ export function useHomePage() {
         return [
             {
                 label: "Edit",
-                icon: <Edit2 className="w-4 h-4" />,
+                icon: <Pencil className="w-4 h-4" />,
                 handleClick: handleEdit(identifier)
             },
             {
