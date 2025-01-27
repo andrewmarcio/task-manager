@@ -10,9 +10,56 @@ export function usePagination() {
         return { label: currentOptinValue, value: currentOptinValue }
     }), [])
 
-    const handleChangePerPage = useCallback((value: string) => {
+    const changePerPage = useCallback((value: string) => {
         setRowsPerPage(Number(value))
     }, [])
 
-    return { currentPage, totalPages, rowsPerPage, rowsPerPageOptions, handleChangePerPage }
+    const handleTotalPages = useCallback((total: number) => {
+        setTotalPages(total)
+    }, [])
+
+    const prev = useCallback((
+        callback: (page: number) => void
+    ) => {
+        console.log({currentPage});
+        
+        if(currentPage <= 1) return
+        const page = currentPage - 1
+        setCurrentPage(page)
+        callback(page)
+    }, [currentPage])
+    
+    const next = useCallback((
+        callback: (page: number) => void
+    ) => {
+        const page = currentPage + 1
+        setCurrentPage(page)
+        callback(page)
+    }, [currentPage])
+    
+    const toFirstPage = useCallback((
+        callback: (page: number) => void
+    ) => {
+        setCurrentPage(1)
+        callback(1)
+    }, [currentPage])
+    
+    const toLastPage = useCallback((
+        callback: (page: number) => void
+    ) => {
+        callback(currentPage)
+    }, [currentPage])
+
+    return { 
+        currentPage, 
+        totalPages, 
+        rowsPerPage, 
+        rowsPerPageOptions, 
+        prev,
+        next,
+        toFirstPage,
+        toLastPage,
+        changePerPage, 
+        handleTotalPages 
+    }
 }
