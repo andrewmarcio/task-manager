@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useCallback } from "react";
 import { Avatar } from "../avatar";
 import { 
     DropdownMenu, 
@@ -10,8 +10,18 @@ import {
     DropdownMenuTrigger 
 } from "../dropdown-menu";
 import { LogOut, User } from "lucide-react";
+import { authService } from "@services/auth.service";
+import { cookiesService } from "@infra/cookies/cookies.service";
+import { useNavigate } from "react-router-dom";
  
 const AppBar = memo(() => {
+    const navigate = useNavigate()
+    
+    const logOut = useCallback(() => {
+        authService({ cookies: cookiesService(), client: {} as any}).logout()
+        navigate("/auth/login")
+    }, [])
+
     return <div className="w-100 flex flex-row items-center justify-between">
         <div className="flex flex-col">
             <h3 className="text-xl md:text-3xl font-bold">
@@ -33,7 +43,7 @@ const AppBar = memo(() => {
                     </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator className="bg-gray-200" />
-                <DropdownMenuItem className="hover:cursor-pointer">
+                <DropdownMenuItem className="hover:cursor-pointer" onClick={logOut}>
                     Logout
                     <DropdownMenuShortcut>
                         <LogOut className="w-4 h-4" />
