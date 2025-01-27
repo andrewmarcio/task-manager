@@ -1,28 +1,29 @@
+import { TaskStatus as TaskStatusEnum } from "@domain/task/task-status.enum"
 import { AppBar } from "@presentation/components/app-bar"
 import { Button } from "@presentation/components/button"
 import { Input } from "@presentation/components/form/input"
 import { Select } from "@presentation/components/form/select"
-import { 
-    Table, 
-    TableActions, 
-    TableBody, 
-    TableCell, 
-    TableHead, 
-    TableHeader, 
-    TableRow 
+import {
+    Table,
+    TableActions,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow
 } from "@presentation/components/table"
-import { 
-    ChevronLeft, 
-    ChevronRight, 
-    ChevronsLeft, 
-    ChevronsRight, 
-    List, 
-    LoaderCircleIcon 
+import { TaskDialog } from "@presentation/components/task-dialog"
+import { TaskStatus } from "@presentation/components/task-status"
+import {
+    ChevronLeft,
+    ChevronRight,
+    ChevronsLeft,
+    ChevronsRight,
+    List,
+    LoaderCircleIcon
 } from "lucide-react"
 import { memo } from "react"
 import { useHomePage } from "./use-home-page"
-import { TaskStatus as TaskStatusEnum } from "@domain/task/task-status.enum"
-import { TaskStatus } from "@presentation/components/task-status"
 
 const Home = memo(() => {
     const {
@@ -36,7 +37,8 @@ const Home = memo(() => {
         actionOptions,
         handleChangePerPage,
         handleChangeStatus,
-        handlePageChange
+        handlePageChange,
+        getTasksByFilters
     } = useHomePage()
 
     return <div className="flex flex-col w-full h-full justify-center">
@@ -47,7 +49,6 @@ const Home = memo(() => {
         </div>
         <div className="flex items-center justify-center">
             <div className="w-[85dvw] flex flex-col gap-1">
-                {/* <h3 className="text-base font-bold md:text-3xl">Tasks</h3> */}
                 <h5 className="text-xs md:text-base">Here's a list of your tasks</h5>
             </div>
         </div>
@@ -69,6 +70,9 @@ const Home = memo(() => {
                                     { label: "Complete", value: TaskStatusEnum.Complete },
                                 ]}
                             />
+                            <div className="w-full flex justify-end">
+                                <TaskDialog.Create refresh={getTasksByFilters} />
+                            </div>
                         </div>
                         <div className="border rounded-lg">
                             <Table>

@@ -86,7 +86,7 @@ export function useHomePage() {
         setLaoding(false)
     }, [rowsPerPage, currentPage])
 
-    const searchByTitle = useCallback(async () => {
+    const getTasksByFilters = useCallback(async () => {
         setLaoding(true)
         try {
             const params = getValues()
@@ -150,12 +150,12 @@ export function useHomePage() {
 
     useEffect(() => {
         if (searchTitle) {
-            searchByTitle()
+            getTasksByFilters()
         }
     }, [searchTitle])
 
     useEffect(() => {
-        searchByTitle()
+        getTasksByFilters()
     }, [])
 
 
@@ -170,6 +170,7 @@ export function useHomePage() {
         actionOptions,
         handleChangePerPage,
         handleChangeStatus,
-        handlePageChange
+        handlePageChange,
+        getTasksByFilters
     }
 }
