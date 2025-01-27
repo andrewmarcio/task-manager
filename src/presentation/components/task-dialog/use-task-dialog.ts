@@ -3,7 +3,7 @@ import { Task } from "@domain/task/task.entity"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useToast } from "@presentation/hooks/use-toast"
 import { useCallback, useState } from "react"
-import { DefaultValues, SubmitHandler, useForm } from "react-hook-form"
+import { DefaultValues, SubmitHandler, useForm, useWatch } from "react-hook-form"
 import { z } from "zod"
 
 export function useTaskDialog<V extends z.ZodType<any, any, any>, T extends Omit<Task, "identifier">>({
@@ -24,7 +24,8 @@ export function useTaskDialog<V extends z.ZodType<any, any, any>, T extends Omit
 
     const { toast } = useToast()
 
-    const { 
+    const {
+        control,
         formState: {
             isSubmitting,
             isValid,
@@ -39,6 +40,11 @@ export function useTaskDialog<V extends z.ZodType<any, any, any>, T extends Omit
         defaultValues,
     })
 
+    const selectedStatus = useWatch({
+        control,
+        name: "status"
+    })
+
     const handleOpenDialog = useCallback((value: boolean) => {
         setOpenDialog(value)
         reset()
@@ -50,7 +56,7 @@ export function useTaskDialog<V extends z.ZodType<any, any, any>, T extends Omit
 
     const handleSave: SubmitHandler<T> = useCallback(async (data) => {
         try {
-            if(!!identifier) {
+            if (!!identifier) {
                 await useCase.execute(identifier, data)
             } else {
                 await useCase.execute(data)
@@ -70,13 +76,14 @@ export function useTaskDialog<V extends z.ZodType<any, any, any>, T extends Omit
                 description: "The task information could not be saved"
             })
         }
-    }, [identifier, useCase, refresh]) 
+    }, [identifier, useCase, refresh])
 
     return {
         errors,
         isValid,
         openDialog,
         isSubmitting,
+        selectedStatus,
         register,
         handleSave,
         handleSubmit,

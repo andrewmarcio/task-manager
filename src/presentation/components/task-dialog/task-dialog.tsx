@@ -1,4 +1,4 @@
-import { memo } from "react";
+import React, { memo } from "react";
 import { Button } from "../button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../dialog";
 import { Input } from "../form/input";
@@ -7,7 +7,7 @@ import { Textarea } from "../form/text-area";
 import { Select } from "../form/select";
 import { TaskStatus } from "@domain/task/task-status.enum";
 import { useTaskDialog } from "./use-task-dialog";
-import { CreateTaskValidationSchema } from "@domain/task/task.validation";
+import { CreateTaskValidationSchema, UpdateTaskValidationSchema } from "@domain/task/task.validation";
 import { Task } from "@domain/task/task.entity";
 import { updateTaskUseCase } from "@domain/task/update-task.usecase";
 import { taskService } from "@services/task.service";
@@ -52,19 +52,21 @@ const TaskCreate = memo(({ refresh } : { refresh?: () => void }) => {
                 </DialogHeader>
                 <form className="w-full" onSubmit={handleSubmit(handleSave)}>
                     <div className="grid gap-4 py-4">
-                        <div className="grid grid-cols-4 items-center gap-4">
+                        <div className="grid grid-cols-4 items-center gap-4 gap-y-2">
                             <label htmlFor="title" className="text-right">
                                 Title
                             </label>
                             <Input {...register("title")} id="title" className="col-span-3" disabled={isSubmitting}/>
-                            {errors?.title && (<p className="text-xs text-red-600 font-medium">{errors.title.message}</p>)}
+                            <span className="col-span-1"/>
+                            {errors?.title && (<p className="text-xs text-red-600 font-medium col-span-3">{errors.title.message}</p>)}
                         </div>
-                        <div className="grid grid-cols-4 items-center gap-4">
+                        <div className="grid grid-cols-4 items-center gap-4 gap-y-2">
                             <label htmlFor="description" className="text-right">
                                 Description
                             </label>
                             <Textarea {...register("description")} id="description" className="col-span-3" disabled={isSubmitting}/>
-                            {errors?.description && (<p className="text-xs text-red-600 font-medium">{errors.description.message}</p>)}
+                            <span className="col-span-1"/>
+                            {errors?.description && (<p className="text-xs text-red-600 font-medium col-span-3">{errors.description.message}</p>)}
                         </div>
                     </div>
                     <DialogFooter>
@@ -78,13 +80,15 @@ const TaskCreate = memo(({ refresh } : { refresh?: () => void }) => {
 
 const TaskUpdate = memo(({ 
     task: { identifier, ...task },
-    refresh
-}: { task: Task; refresh?: () => void }) => {
+    refresh,
+    actionButton
+}: { task: Task; refresh?: () => void, actionButton?: React.ReactNode }) => {
     const {
         errors,
         openDialog,
         isSubmitting,
         isValid,
+        selectedStatus,
         register,
         handleSubmit,
         handleSave,
@@ -93,7 +97,7 @@ const TaskUpdate = memo(({
     } = useTaskDialog({
         identifier,
         defaultValues: task,
-        validationSchema: CreateTaskValidationSchema, 
+        validationSchema: UpdateTaskValidationSchema, 
         useCase: updateTaskUseCase({ service: taskService({ client: httpClient }) }),
         refresh
     })
@@ -101,10 +105,11 @@ const TaskUpdate = memo(({
     return (
         <Dialog open={openDialog} onOpenChange={handleOpenDialog}>
             <DialogTrigger asChild>
+                {actionButton ??
                 <Button variant="outline">
                     <CirclePlus />
-                    Add task
-                </Button>
+                    Edit task
+                </Button>}
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px] bg-white">
                 <DialogHeader>
@@ -115,25 +120,28 @@ const TaskUpdate = memo(({
                 </DialogHeader>
                 <form className="w-full" onSubmit={handleSubmit(handleSave)}>
                     <div className="grid gap-4 py-4">
-                        <div className="grid grid-cols-4 items-center gap-4">
+                        <div className="grid grid-cols-4 items-center gap-4 gap-y-2">
                             <label htmlFor="title" className="text-right">
                                 Title
                             </label>
                             <Input {...register("title")} id="title" className="col-span-3" disabled={isSubmitting}/>
-                            {errors?.title && (<p className="text-xs text-red-600 font-medium">{errors.title.message}</p>)}
+                            <span className="col-span-1"/>
+                            {errors?.title && (<p className="text-xs text-red-600 font-medium col-span-3">{errors.title.message}</p>)}
                         </div>
-                        <div className="grid grid-cols-4 items-center gap-4">
+                        <div className="grid grid-cols-4 items-center gap-4 gap-y-2">
                             <label htmlFor="description" className="text-right">
                                 Description
                             </label>
                             <Textarea {...register("description")} id="description" className="col-span-3" disabled={isSubmitting}/>
-                            {errors?.description && (<p className="text-xs text-red-600 font-medium">{errors.description.message}</p>)}
+                            <span className="col-span-1"/>
+                            {errors?.description && (<p className="text-xs text-red-600 font-medium col-span-3">{errors.description.message}</p>)}
                         </div>
-                        <div className="grid grid-cols-4 items-center gap-4">
+                        <div className="grid grid-cols-4 items-center gap-4 gap-y-2">
                             <label htmlFor="status" className="text-right">
                                 Status
                             </label>
-                            <Select 
+                            <Select
+                                value={selectedStatus}
                                 className="col-span-3" 
                                 options={[
                                     { label: "Pending", value: TaskStatus.Pending },
@@ -143,7 +151,8 @@ const TaskUpdate = memo(({
                                 onValueChange={handleStatusChange} 
                                 disabled={isSubmitting}
                             />
-                            {errors?.status && (<p className="text-xs text-red-600 font-medium">{errors.status.message}</p>)}
+                            <span className="col-span-1"/>
+                            {errors?.status && (<p className="text-xs text-red-600 font-medium col-span-3">{errors.status.message}</p>)}
                         </div>
                     </div>
                     <DialogFooter>
