@@ -1,7 +1,7 @@
 import { TaskStatus } from "./task-status.enum"
 
 export interface ListTaskDTO {
-    searchText: string
+    searchText?: string
     status?: TaskStatus
     perPage: number
     currentPage: number

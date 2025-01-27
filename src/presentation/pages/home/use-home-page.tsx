@@ -19,7 +19,7 @@ export function useHomePage() {
 
     const { control, register, getValues, setValue } = useForm({
         defaultValues: {
-            searchText: "",
+            searchText: undefined,
             status: undefined
         }
     })
@@ -41,7 +41,7 @@ export function useHomePage() {
         name: "searchText"
     })
 
-    const searchTitle = useDebounce(searchText)
+    const searchTitle = useDebounce(searchText ?? "")
 
     const getTasks = useCallback(async (params: ListTaskDTO) => {
         const service = taskService({ client: httpClient })
@@ -124,7 +124,7 @@ export function useHomePage() {
     ])
 
     useEffect(() => {
-        if (searchTitle) {
+        if(searchText !== undefined) {
             getTasksByFilters()
         }
     }, [searchTitle])
