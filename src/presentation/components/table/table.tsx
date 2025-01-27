@@ -124,9 +124,9 @@ export type TableAction = {
     handleClick: () => void
 }
 type TableActionsProps = {
-    actions: TableAction[]
+    actions?: TableAction[]
 }
-const TableActions = React.memo(({ actions }: TableActionsProps) => {
+const TableActions = React.memo(({ actions, children }: React.PropsWithChildren<TableActionsProps>) => {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -135,7 +135,8 @@ const TableActions = React.memo(({ actions }: TableActionsProps) => {
             <DropdownMenuContent className="w-56 bg-white">
                 <DropdownMenuLabel>Actions</DropdownMenuLabel>
                 <DropdownMenuSeparator className="bg-gray-200" />
-                {actions.flatMap((action, index) => (
+                {children}
+                {actions?.flatMap((action, index) => (
                     <DropdownMenuItem key={`table-action-${index}`} className="hover:cursor-pointer" onClick={action.handleClick}>
                         {action.label}
                         {action?.icon && <DropdownMenuShortcut>{action.icon}</DropdownMenuShortcut>}
