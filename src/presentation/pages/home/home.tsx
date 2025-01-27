@@ -20,10 +20,13 @@ import {
     ChevronsLeft,
     ChevronsRight,
     List,
-    LoaderCircleIcon
+    LoaderCircleIcon,
+    Pencil,
+    Trash2
 } from "lucide-react"
 import { memo } from "react"
 import { useHomePage } from "./use-home-page"
+import { DropdownMenuItem, DropdownMenuShortcut } from "@presentation/components/dropdown-menu"
 
 const Home = memo(() => {
     const {
@@ -34,7 +37,6 @@ const Home = memo(() => {
         rowsPerPage,
         rowsPerPageOptions,
         register,
-        actionOptions,
         handleChangePerPage,
         handleChangeStatus,
         handlePageChange,
@@ -93,7 +95,23 @@ const Home = memo(() => {
                                             <TableCell className="truncate max-w-36">{task.description}</TableCell>
                                             <TableCell><TaskStatus type={task.status} /></TableCell>
                                             <TableCell>
-                                                <TableActions actions={actionOptions(task.identifier)} />
+                                                <TableActions>
+                                                    <TaskDialog.Update
+                                                        key={`edit-dialog-${index}`}
+                                                        task={task}
+                                                        refresh={getTasksByFilters}
+                                                        actionButton={
+                                                            <Button variant="ghost" className="w-full flex p-[0.625rem_0.5rem] items-center justify-between font-normal [&_div]:w-full [&_div]:p-0">
+                                                                Edit
+                                                                <DropdownMenuShortcut><Pencil className="w-4 h-4" /></DropdownMenuShortcut>
+                                                            </Button>
+                                                        }
+                                                    />
+                                                    <DropdownMenuItem key={`table-action-${index}`} className="hover:cursor-pointer">
+                                                        Remove
+                                                        <DropdownMenuShortcut><Trash2 className="w-4 h-4 text-red-600" /></DropdownMenuShortcut>
+                                                    </DropdownMenuItem>
+                                                </TableActions>
                                             </TableCell>
                                         </TableRow>
                                     )}

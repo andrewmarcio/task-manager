@@ -2,12 +2,10 @@ import { TaskStatus } from "@domain/task/task-status.enum"
 import { ListTaskDTO } from "@domain/task/task.dto"
 import { Task } from "@domain/task/task.entity"
 import { httpClient } from "@infra/http-client"
-import { TableAction } from "@presentation/components/table/table"
 import { useDebounce } from "@presentation/hooks/use-debounce"
 import { usePagination } from "@presentation/hooks/use-pagination"
 import { useToast } from "@presentation/hooks/use-toast"
 import { taskService } from "@services/task.service"
-import { Pencil, Trash2 } from "lucide-react"
 import { useCallback, useEffect, useState } from "react"
 import { useForm, useWatch } from "react-hook-form"
 
@@ -98,55 +96,32 @@ export function useHomePage() {
         setLaoding(false)
     }, [rowsPerPage, currentPage])
 
-    const handlePageChange = useCallback(
-        (type: "toFirstPage" | "toLastPage" | "prev" | "next") => {
-            const request = async (page: number) => {
-                setLaoding(true)
-                try {
-                    const params = getValues()
-                    const { data } = await getTasks({ ...params, currentPage: page, perPage: rowsPerPage })
-                    setTasks(data)
-                } catch (error) {
-                    showRequestErrorMessage()
-                }
-                setLaoding(false)
+    const handlePageChange = useCallback((type: "toFirstPage" | "toLastPage" | "prev" | "next") => {
+        const request = async (page: number) => {
+            setLaoding(true)
+            try {
+                const params = getValues()
+                const { data } = await getTasks({ ...params, currentPage: page, perPage: rowsPerPage })
+                setTasks(data)
+            } catch (error) {
+                showRequestErrorMessage()
             }
+            setLaoding(false)
+        }
 
-            return {
-                toFirstPage() { toFirstPage(request) },
-                toLastPage() { toLastPage(request) },
-                prev() { prev(request) },
-                next() { next(request) },
-            }[type]
-        }, [
-            rowsPerPage,
-            prev,
-            next,
-            toFirstPage,
-            toLastPage,
-        ])
-
-    const handleEdit = useCallback((identifier: string) => () => {
-        alert("Edit")
-    }, [])
-    const handleRemove = useCallback((identifier: string) => () => {
-        alert("Remove")
-    }, [])
-
-    const actionOptions = useCallback((identifier: string) => {
-        return [
-            {
-                label: "Edit",
-                icon: <Pencil className="w-4 h-4" />,
-                handleClick: handleEdit(identifier)
-            },
-            {
-                label: "Remove",
-                icon: <Trash2 className="w-4 h-4 text-red-600" />,
-                handleClick: handleRemove(identifier)
-            },
-        ] satisfies TableAction[]
-    }, [])
+        return {
+            toFirstPage() { toFirstPage(request) },
+            toLastPage() { toLastPage(request) },
+            prev() { prev(request) },
+            next() { next(request) },
+        }[type]
+    }, [
+        rowsPerPage,
+        prev,
+        next,
+        toFirstPage,
+        toLastPage,
+    ])
 
     useEffect(() => {
         if (searchTitle) {
@@ -167,7 +142,6 @@ export function useHomePage() {
         rowsPerPage,
         rowsPerPageOptions,
         register,
-        actionOptions,
         handleChangePerPage,
         handleChangeStatus,
         handlePageChange,
